@@ -264,15 +264,6 @@ const LoginPage = () => {
                   </FormHelperText>
                 )}
               </FormControl>
-              <Box
-                sx={{ mb: 4, display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'space-between' }}
-              >
-                <FormControlLabel
-                  label='Remember Me'
-                  control={<Checkbox checked={rememberMe} onChange={e => setRememberMe(e.target.checked)} />}
-                />
-                <LinkStyled href='/forgot-password'>Forgot Password?</LinkStyled>
-              </Box>
               <Button fullWidth size='large' type='submit' variant='contained' sx={{ mb: 7 }}>
                 Login
               </Button>
