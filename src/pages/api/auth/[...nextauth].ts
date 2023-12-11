@@ -47,8 +47,6 @@ export const authOptions: NextAuthOptions = {
              * user data below. Below return statement will set the user object in the token and the same is set in
              * the session which will be accessible all over the app.
              */
-            console.log(user)
-
             return user
           }
 
@@ -102,7 +100,6 @@ export const authOptions: NextAuthOptions = {
         token.role_name = user.role_name
         token.username = user.username
       }
-      console.log(token)
 
       return token
     },
