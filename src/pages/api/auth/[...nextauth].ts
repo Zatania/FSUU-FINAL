@@ -99,6 +99,9 @@ export const authOptions: NextAuthOptions = {
         token.id = Number(user.id)
         token.role_name = user.role_name
         token.username = user.username
+        token.firstName = user.firstName
+        token.lastName = user.lastName
+        token.studentNumber = user.studentNumber
       }
 
       return token
@@ -109,6 +112,9 @@ export const authOptions: NextAuthOptions = {
         session.user.id = token.id
         session.user.role = token.role_name
         session.user.username = token.username
+        session.user.firstName = token.firstName
+        session.user.lastName = token.lastName
+        session.user.studentNumber = token.studentNumber
       }
 
       return session
