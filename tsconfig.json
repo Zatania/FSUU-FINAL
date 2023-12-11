@@ -30,6 +30,9 @@
       "next-auth": [
         "./node_modules/next-auth"
       ],
+      "react": [
+        "./node_modules/@types/react"
+      ]
     }
   },
   "include": [
