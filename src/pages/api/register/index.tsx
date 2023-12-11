@@ -21,6 +21,11 @@ const insertUser = async (username: string, email: string, password: string) => 
       password
     ])) as RowDataPacket[]
 
+    const userId = rows.insertId
+
+    // Add the role to the user_roles table
+    await db.query('INSERT INTO users_roles (user_id, role_id) VALUES (?, ?)', [userId, 1])
+
     return rows[0] || null
   } catch (error) {
     console.log(error)
@@ -31,13 +36,9 @@ const handler = async (req: NextApiRequestWithUser, res: NextApiResponse) => {
   const { username, email, password } = req.body
 
   try {
-    const user = await insertUser(username, email, password)
+    await insertUser(username, email, password)
 
-    if (user) {
-      return res.status(200).json(user)
-    } else {
-      return res.status(404).json({ message: 'Username or Password is invalid' })
-    }
+    return res.status(200).json({ message: 'User created successfully' })
   } catch (error) {
     if (error instanceof Error) {
       return res.status(500).json({ message: error.message })

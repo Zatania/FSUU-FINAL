@@ -1,44 +1,39 @@
-// ** Next Imports
 import { NextApiResponse, NextApiRequest } from 'next/types'
+import { RowDataPacket } from 'mysql2/promise'
+import db from '../../db'
 
-// ** Fake user data and data type
-// ** Please remove below user data and data type in production and verify user with Real Database
-export type UserDataType = {
-  id: number
-  role: string
-  email: string
-  fullName: string
-  username: string
-  password: string
-}
-const users: UserDataType[] = [
-  {
-    id: 1,
-    role: 'admin',
-    password: 'admin',
-    username: 'johndoe',
-    fullName: 'John Doe',
-    email: 'admin@materio.com'
-  },
-  {
-    id: 2,
-    role: 'student',
-    password: 'client',
-    username: 'nathandoe',
-    fullName: 'Nathan Doe',
-    email: 'client@materio.com'
+const getUser = async (username: string, password: string) => {
+  try {
+    const [rows] = (await db.query(
+      'SELECT users.*, roles.name AS role_name FROM users ' +
+        'JOIN users_roles ON users.id = users_roles.user_id ' +
+        'JOIN roles ON users_roles.role_id = roles.id ' +
+        'WHERE username = ? AND password = ?',
+      [username, password]
+    )) as RowDataPacket[]
+
+    return rows[0] || null
+  } catch (error) {
+    console.log(error)
   }
-]
-
-const handler = (req: NextApiRequest, res: NextApiResponse) => {
+}
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { username, password } = req.body
 
-  const user = users.find(u => u.username === username && u.password === password)
+  try {
+    const user = await getUser(username, password)
 
-  if (user) {
+    if (!user) {
+      return res.status(401).json({ message: 'Invalid credentials' })
+    }
+
     return res.status(200).json(user)
-  } else {
-    return res.status(404).json({ message: 'Username or Password is invalid' })
+  } catch (error) {
+    if (error instanceof Error) {
+      return res.status(500).json({ message: error.message })
+    } else {
+      return res.status(500).json({ message: 'Something went wrong' })
+    }
   }
 }
 

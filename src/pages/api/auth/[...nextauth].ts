@@ -47,6 +47,8 @@ export const authOptions: NextAuthOptions = {
              * user data below. Below return statement will set the user object in the token and the same is set in
              * the session which will be accessible all over the app.
              */
+            console.log(user)
+
             return user
           }
 
@@ -96,17 +98,20 @@ export const authOptions: NextAuthOptions = {
          * For adding custom parameters to user in session, we first need to add those parameters
          * in token which then will be available in the `session()` callback
          */
-        token.role = user.role
-        token.fullName = user.fullName
+        token.id = Number(user.id)
+        token.role_name = user.role_name
+        token.username = user.username
       }
+      console.log(token)
 
       return token
     },
     async session({ session, token }) {
       if (session.user) {
         // ** Add custom params to user in session which are added in `jwt()` callback via `token` parameter
-        session.user.role = token.role
-        session.user.fullName = token.fullName
+        session.user.id = token.id
+        session.user.role = token.role_name
+        session.user.username = token.username
       }
 
       return session

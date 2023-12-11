@@ -31,6 +31,7 @@ import BlankLayout from 'src/@core/layouts/BlankLayout'
 
 // ** Hooks
 import { useSettings } from 'src/@core/hooks/useSettings'
+import { useRouter } from 'next/router'
 
 // ** Third Party Imports
 import * as yup from 'yup'
@@ -108,6 +109,7 @@ const Register = () => {
   const theme = useTheme()
   const { settings } = useSettings()
   const hidden = useMediaQuery(theme.breakpoints.down('md'))
+  const router = useRouter()
 
   // ** Vars
   const { skin } = settings
@@ -145,12 +147,12 @@ const Register = () => {
 
       toast.success('User registered successfully!')
       setLoading(false)
+      router.push('/login')
     } catch (error) {
       console.error(error)
       toast.error('Failed to register user!')
       setLoading(false)
     }
-    console.log(data)
   }
 
   return (
