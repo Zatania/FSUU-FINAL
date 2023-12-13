@@ -28,7 +28,7 @@ export const authOptions: NextAuthOptions = {
          * For e.g. return { id: 1, name: 'J Smith', email: 'jsmith@example.com' }
          * You can also use the `req` object to obtain additional parameters (i.e., the request IP address)
          */
-        const { username, password } = credentials as { username: string; password: string }
+        const { username, password, userType } = credentials as { username: string; password: string; userType: string }
 
         try {
           // ** Login API Call to match the user credentials and receive user data in response along with his role
@@ -37,7 +37,7 @@ export const authOptions: NextAuthOptions = {
             headers: {
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ username, password })
+            body: JSON.stringify({ username, password, userType })
           })
           const user = await res.json()
 
@@ -47,6 +47,7 @@ export const authOptions: NextAuthOptions = {
              * user data below. Below return statement will set the user object in the token and the same is set in
              * the session which will be accessible all over the app.
              */
+
             return user
           }
 
@@ -92,16 +93,18 @@ export const authOptions: NextAuthOptions = {
      */
     async jwt({ token, user }) {
       if (user) {
+        const userData = user[0]
+
         /*
          * For adding custom parameters to user in session, we first need to add those parameters
          * in token which then will be available in the `session()` callback
          */
-        token.id = Number(user.id)
-        token.role_name = user.role_name
-        token.username = user.username
-        token.firstName = user.firstName
-        token.lastName = user.lastName
-        token.studentNumber = user.studentNumber
+        token.id = Number(userData.id)
+        token.role_name = userData.role_name
+        token.username = userData.username
+        token.firstName = userData.firstName
+        token.lastName = userData.lastName
+        token.studentNumber = userData.studentNumber
       }
 
       return token

@@ -1,25 +1,165 @@
 import { NextApiRequest, NextApiResponse } from 'next/types'
 import { RowDataPacket } from 'mysql2/promise'
+import dayjs from 'dayjs'
 import db from '../../db'
 
 interface User {
-  id: number
   username: string
-  email: string
   password: string
+  studentNumber: string
+  firstName: string
+  middleName: string
+  lastName: string
+  department: number
+  course: string
+  major: string
+  graduateCheck: string
+  graduationDate: string
+  academicHonor: string
+  yearLevel: string
+  schoolYear: string
+  semester: string
+  homeAddress: string
+  contactNumber: string
+  emailAddress: string
+  birthDate: string
+  birthPlace: string
+  religion: string
+  citizenship: string
+  sex: string
+  fatherName: string
+  motherName: string
+  guardianName: string
+  elementary: string
+  elementaryGraduated: string
+  secondary: string
+  secondaryGraduated: string
+  juniorHigh: string
+  juniorHighGraduated: string
+  seniorHigh: string
+  seniorHighGraduated: string
+  tertiary: string
+  tertiaryGraduated: string
+  employedAt: string
+  position: string
+  [key: string]: string | number
 }
 
 interface NextApiRequestWithUser extends NextApiRequest {
   body: User
 }
 
-const insertUser = async (username: string, email: string, password: string) => {
+// Function to format date values
+const formatDateValues = (userData: User) => {
+  const formattedUserData = { ...userData }
+
+  const dateFields = [
+    'birthDate',
+    'graduationDate',
+    'elementaryGraduated',
+    'secondaryGraduated',
+    'juniorHighGraduated',
+    'seniorHighGraduated',
+    'tertiaryGraduated'
+  ]
+
+  dateFields.forEach(field => {
+    if (formattedUserData[field]) {
+      formattedUserData[field] = dayjs(formattedUserData[field]).format('YYYY-MM-DD')
+    }
+  })
+
+  return formattedUserData
+}
+
+const insertUser = async (userData: User) => {
+  const formattedUserData = formatDateValues(userData)
+
+  const {
+    username,
+    password,
+    studentNumber,
+    firstName,
+    middleName,
+    lastName,
+    department,
+    course,
+    major,
+    graduateCheck,
+    graduationDate,
+    academicHonor,
+    yearLevel,
+    schoolYear,
+    semester,
+    homeAddress,
+    contactNumber,
+    emailAddress,
+    birthDate,
+    birthPlace,
+    religion,
+    citizenship,
+    sex,
+    fatherName,
+    motherName,
+    guardianName,
+    elementary,
+    elementaryGraduated,
+    secondary,
+    secondaryGraduated,
+    juniorHigh,
+    juniorHighGraduated,
+    seniorHigh,
+    seniorHighGraduated,
+    tertiary,
+    tertiaryGraduated,
+    employedAt,
+    position
+  } = formattedUserData
+
   try {
-    const [rows] = (await db.query('INSERT INTO users (username, email, password) VALUES (?, ?, ?)', [
-      username,
-      email,
-      password
-    ])) as RowDataPacket[]
+    const [rows] = (await db.query(
+      'INSERT INTO users (username, password, studentNumber, firstName, middleName, lastName, department, course, major, graduateCheck, graduationDate, academicHonor, yearLevel, schoolYear, semester, homeAddress, contactNumber, emailAddress, birthDate, birthPlace, religion, citizenship, sex, fatherName, motherName, guardianName, elementary, elementaryGraduated, secondary, secondaryGraduated, juniorHigh, juniorHighGraduated, seniorHigh, seniorHighGraduated, tertiary, tertiaryGraduated, employedAt, position) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      [
+        username,
+        password,
+        studentNumber,
+        firstName,
+        middleName,
+        lastName,
+        department,
+        course,
+        major,
+        graduateCheck,
+        graduationDate,
+        academicHonor,
+        yearLevel,
+        schoolYear,
+        semester,
+        homeAddress,
+        contactNumber,
+        emailAddress,
+        birthDate,
+        birthPlace,
+        religion,
+        citizenship,
+        sex,
+        fatherName,
+        motherName,
+        guardianName,
+        elementary,
+        elementaryGraduated,
+        secondary,
+        secondaryGraduated,
+        juniorHigh,
+        juniorHighGraduated,
+        seniorHigh,
+        seniorHighGraduated,
+        tertiary,
+        tertiaryGraduated,
+        employedAt,
+        position
+      ]
+    )) as RowDataPacket[]
 
     const userId = rows.insertId
 
@@ -33,12 +173,12 @@ const insertUser = async (username: string, email: string, password: string) => 
 }
 
 const handler = async (req: NextApiRequestWithUser, res: NextApiResponse) => {
-  const { username, email, password } = req.body
+  const data = req.body
 
   try {
-    await insertUser(username, email, password)
+    const user = await insertUser(data)
 
-    return res.status(200).json({ message: 'User created successfully' })
+    return res.status(200).json(user)
   } catch (error) {
     if (error instanceof Error) {
       return res.status(500).json({ message: error.message })

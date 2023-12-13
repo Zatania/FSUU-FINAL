@@ -12,7 +12,7 @@ const navigation = (): VerticalNavItemsType => {
     },
     {
       title: 'Dashboard',
-      path: '/dashboard/student',
+      path: '/student/dashboard',
       action: 'read',
       subject: 'student-page',
       icon: 'mdi:home-outline'
@@ -25,10 +25,10 @@ const navigation = (): VerticalNavItemsType => {
       icon: 'mdi:home-outline'
     },
     {
-      path: '/acl',
+      path: '/student/request',
+      title: 'Request Credentials',
       action: 'read',
-      subject: 'acl-page',
-      title: 'Access Control',
+      subject: 'request-page',
       icon: 'mdi:shield-outline'
     }
   ]

@@ -7,7 +7,6 @@ import Link from 'next/link'
 // ** MUI Components
 import Button from '@mui/material/Button'
 import Divider from '@mui/material/Divider'
-import Checkbox from '@mui/material/Checkbox'
 import TextField from '@mui/material/TextField'
 import InputLabel from '@mui/material/InputLabel'
 import IconButton from '@mui/material/IconButton'
@@ -18,8 +17,9 @@ import OutlinedInput from '@mui/material/OutlinedInput'
 import { styled, useTheme } from '@mui/material/styles'
 import FormHelperText from '@mui/material/FormHelperText'
 import InputAdornment from '@mui/material/InputAdornment'
+import Select from '@mui/material/Select'
+import MenuItem from '@mui/material/MenuItem'
 import Typography, { TypographyProps } from '@mui/material/Typography'
-import MuiFormControlLabel, { FormControlLabelProps } from '@mui/material/FormControlLabel'
 
 // ** Icon Imports
 import Icon from 'src/@core/components/icon'
@@ -84,25 +84,18 @@ const LinkStyled = styled(Link)(({ theme }) => ({
   color: theme.palette.primary.main
 }))
 
-const FormControlLabel = styled(MuiFormControlLabel)<FormControlLabelProps>(({ theme }) => ({
-  '& .MuiFormControlLabel-label': {
-    fontSize: '0.875rem',
-    color: theme.palette.text.secondary
-  }
-}))
-
 const schema = yup.object().shape({
   username: yup.string().required('Username is required.'),
-  password: yup.string().min(5).required('Password is required.')
+  password: yup.string().required('Password is required.')
 })
 
 interface FormData {
   username: string
   password: string
+  userType: string
 }
 
 const LoginPage = () => {
-  const [rememberMe, setRememberMe] = useState<boolean>(true)
   const [showPassword, setShowPassword] = useState<boolean>(false)
 
   // ** Hooks
@@ -125,8 +118,8 @@ const LoginPage = () => {
   })
 
   const onSubmit = (data: FormData) => {
-    const { username, password } = data
-    signIn('credentials', { username, password, redirect: false }).then(res => {
+    const { username, password, userType } = data
+    signIn('credentials', { username, password, userType, redirect: false }).then(res => {
       if (res && res.ok) {
         const returnUrl = router.query.returnUrl
         const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'
@@ -207,7 +200,7 @@ const LoginPage = () => {
             </Box>
 
             <Divider sx={{ my: theme => `${theme.spacing(5)} !important` }}></Divider>
-            <form noValidate onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <FormControl fullWidth sx={{ mb: 4 }}>
                 <Controller
                   name='username'
@@ -227,7 +220,7 @@ const LoginPage = () => {
                   <FormHelperText sx={{ color: 'error.main' }}>{errors.username.message}</FormHelperText>
                 )}
               </FormControl>
-              <FormControl fullWidth>
+              <FormControl fullWidth sx={{ mb: 4 }}>
                 <InputLabel htmlFor='auth-login-v2-password' error={Boolean(errors.password)}>
                   Password
                 </InputLabel>
@@ -262,6 +255,30 @@ const LoginPage = () => {
                   <FormHelperText sx={{ color: 'error.main' }} id=''>
                     {errors.password.message}
                   </FormHelperText>
+                )}
+              </FormControl>
+              <FormControl fullWidth sx={{ mb: 4 }}>
+                <InputLabel>User Type</InputLabel>
+                <Controller
+                  name='userType'
+                  control={control}
+                  defaultValue='Student'
+                  render={({ field: { value, onChange, onBlur } }) => (
+                    <Select
+                      value={value}
+                      onBlur={onBlur}
+                      onChange={onChange}
+                      label='User Type'
+                      error={!!errors.userType}
+                    >
+                      <MenuItem value='Student'>Student</MenuItem>
+                      <MenuItem value='Staff'>Staff</MenuItem>
+                      <MenuItem value='Admin'>Admin</MenuItem>
+                    </Select>
+                  )}
+                />
+                {errors.userType && (
+                  <FormHelperText sx={{ color: 'error.main' }}>{errors.userType.message}</FormHelperText>
                 )}
               </FormControl>
               <Button fullWidth size='large' type='submit' variant='contained' sx={{ mb: 7 }}>
