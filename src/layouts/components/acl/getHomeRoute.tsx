@@ -3,8 +3,8 @@
  */
 const getHomeRoute = (role: string) => {
   if (role === 'student') return '/student/dashboard'
-  else if (role === 'staff') return '/dashboard/staff'
-  else if (role === 'admin') return '/dashboard/admin'
+  else if (role === 'staff') return '/staff/dashboard'
+  else if (role === 'admin') return '/admin/dashboard'
   else return '/login'
 }
 

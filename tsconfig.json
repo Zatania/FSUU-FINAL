@@ -38,7 +38,8 @@
   "include": [
     "src",
     "next-auth.d.ts",
-    "declaration.d.ts"
+    "declaration.d.ts",
+    "UserGuestGuard.tsx"
   ],
   "exclude": [
     "node_modules"

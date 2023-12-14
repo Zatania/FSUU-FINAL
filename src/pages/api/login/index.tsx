@@ -21,8 +21,8 @@ const getUser = async (username: string, password: string, userType: string) => 
     } else if (userType === 'Staff') {
       query =
         'SELECT staffs.*, roles.name AS role_name, GROUP_CONCAT(department.name) AS departments FROM staffs ' +
-        'JOIN users_roles ON staffs.id = users_roles.user_id ' +
-        'JOIN roles ON users_roles.role_id = roles.id ' +
+        'JOIN staffs_roles ON staffs.id = staffs_roles.staff_id ' +
+        'JOIN roles ON staffs_roles.role_id = roles.id ' +
         'LEFT JOIN staffs_departments ON staffs.id = staffs_departments.staff_id ' +
         'LEFT JOIN department ON staffs_departments.department_id = department.id ' +
         'WHERE username = ? ' +
@@ -53,6 +53,8 @@ const getUser = async (username: string, password: string, userType: string) => 
     if (!passwordMatch) {
       return null
     }
+
+    console.log(user)
 
     return user
   } catch (error) {

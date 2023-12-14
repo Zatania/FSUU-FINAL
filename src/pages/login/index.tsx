@@ -119,6 +119,7 @@ const LoginPage = () => {
 
   const onSubmit = (data: FormData) => {
     const { username, password, userType } = data
+    console.log(data)
     signIn('credentials', { username, password, userType, redirect: false }).then(res => {
       if (res && res.ok) {
         const returnUrl = router.query.returnUrl

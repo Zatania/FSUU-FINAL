@@ -130,12 +130,30 @@ const UserDropdown = (props: Props) => {
                 sx={{ width: '2.5rem', height: '2.5rem' }}
               />
             </Badge>
-            <Box sx={{ display: 'flex', ml: 3, alignItems: 'flex-start', flexDirection: 'column' }}>
-              <Typography sx={{ fontWeight: 600 }}>{session.user.firstName + ' ' + session.user.lastName}</Typography>
-              <Typography variant='body2' sx={{ fontSize: '0.8rem', color: 'text.disabled' }}>
-                Student Number: {session.user.studentNumber}
-              </Typography>
-            </Box>
+            {session.user.role === 'student' && (
+              <Box sx={{ display: 'flex', ml: 3, alignItems: 'flex-start', flexDirection: 'column' }}>
+                <Typography sx={{ fontWeight: 600 }}>{session.user.firstName + ' ' + session.user.lastName}</Typography>
+                <Typography variant='body2' sx={{ fontSize: '0.8rem', color: 'text.disabled' }}>
+                  Student Number: {session.user.studentNumber}
+                </Typography>
+              </Box>
+            )}
+            {session.user.role === 'staff' && (
+              <Box sx={{ display: 'flex', ml: 3, alignItems: 'flex-start', flexDirection: 'column' }}>
+                <Typography sx={{ fontWeight: 600 }}>{session.user.firstName + ' ' + session.user.lastName}</Typography>
+                <Typography variant='body2' sx={{ fontSize: '0.8rem', color: 'text.disabled' }}>
+                  Employee Number: {session.user.studentNumber}
+                </Typography>
+              </Box>
+            )}
+            {session.user.role === 'admin' && (
+              <Box sx={{ display: 'flex', ml: 3, alignItems: 'flex-start', flexDirection: 'column' }}>
+                <Typography sx={{ fontWeight: 600 }}>{session.user.firstName + ' ' + session.user.lastName}</Typography>
+                <Typography variant='body2' sx={{ fontSize: '0.8rem', color: 'text.disabled' }}>
+                  Admin Number: {session.user.studentNumber}
+                </Typography>
+              </Box>
+            )}
           </Box>
         </Box>
         <Divider sx={{ mt: '0 !important' }} />

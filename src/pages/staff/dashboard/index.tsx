@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 
-const DashboardStudent = () => {
+const DashboardStaff = () => {
   return (
     <Grid container spacing={6}>
       <Grid item xs={12}>
@@ -36,9 +36,9 @@ const DashboardStudent = () => {
   )
 }
 
-DashboardStudent.acl = {
+DashboardStaff.acl = {
   action: 'read',
-  subject: 'student-page'
+  subject: 'staff-page'
 }
 
-export default DashboardStudent
+export default DashboardStaff
