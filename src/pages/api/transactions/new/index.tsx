@@ -53,7 +53,7 @@ const insertTransaction = async (transaction: TransactionData) => {
 
   try {
     const [rows] = (await db.query(
-      'INSERT INTO transactions (user_id, dateFilled, transcriptCopies, transcriptAmount, dismissalCopies, dismissalAmount, moralCharacterCopies, moralCharacterAmount, diplomaCopies, diplomaAmount, authenticationCopies, authenticationAmount, courseDescriptionCopies, courseDescriptionAmount, certificationType, certificationCopies, certificationAmount, cavRedRibbonCopies, cavRedRibbonAmount, totalAmount, purpose) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      'INSERT INTO transactions (user_id, dateFilled, transcriptCopies, transcriptAmount, dismissalCopies, dismissalAmount, moralCharacterCopies, moralCharacterAmount, diplomaCopies, diplomaAmount, authenticationCopies, authenticationAmount, courseDescriptionCopies, courseDescriptionAmount, certificationType, certificationCopies, certificationAmount, cavRedRibbonCopies, cavRedRibbonAmount, totalAmount, status, purpose) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
       [
         user_id,
         dateFilled,
@@ -75,6 +75,7 @@ const insertTransaction = async (transaction: TransactionData) => {
         cavRedRibbonCopies,
         cavRedRibbonAmount,
         totalAmount,
+        'Submitted',
         purpose
       ]
     )) as RowDataPacket[]
