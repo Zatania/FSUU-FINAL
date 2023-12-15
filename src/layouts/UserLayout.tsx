@@ -37,7 +37,7 @@ const AppBrand = () => {
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
       <img src='/images/logos/logo.png' alt='logo' width='30' height='30' />
       <Typography variant='h6' sx={{ ml: 2 }}>
-        CRURIOS
+        CredentialHub
       </Typography>
     </Box>
   )
@@ -105,7 +105,7 @@ const UserLayout = ({ children, contentHeightFixed }: Props) => {
         }
       })}
       footerProps={{
-        content: () => '2023 © Crurios. All rights reserved.'
+        content: () => '2023 © CredentialHub. All rights reserved.'
       }}
     >
       {children}

@@ -54,8 +54,6 @@ const getUser = async (username: string, password: string, userType: string) => 
       return null
     }
 
-    console.log(user)
-
     return user
   } catch (error) {
     console.log(error)

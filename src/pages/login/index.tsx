@@ -111,15 +111,17 @@ const LoginPage = () => {
     control,
     setError,
     handleSubmit,
+    watch,
     formState: { errors }
   } = useForm<FormData>({
     mode: 'onBlur',
     resolver: yupResolver(schema)
   })
 
+  const userTypeSelect = watch('userType')
+
   const onSubmit = (data: FormData) => {
     const { username, password, userType } = data
-    console.log(data)
     signIn('credentials', { username, password, userType, redirect: false }).then(res => {
       if (res && res.ok) {
         const returnUrl = router.query.returnUrl
@@ -285,14 +287,16 @@ const LoginPage = () => {
               <Button fullWidth size='large' type='submit' variant='contained' sx={{ mb: 7 }}>
                 Login
               </Button>
-              <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
-                <Typography variant='body2' sx={{ mr: 2 }}>
-                  No Account?
-                </Typography>
-                <Typography variant='body2'>
-                  <LinkStyled href='/register'>Create an account</LinkStyled>
-                </Typography>
-              </Box>
+              {userTypeSelect === 'Student' && (
+                <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
+                  <Typography variant='body2' sx={{ mr: 2 }}>
+                    No Account?
+                  </Typography>
+                  <Typography variant='body2'>
+                    <LinkStyled href='/register'>Create an account</LinkStyled>
+                  </Typography>
+                </Box>
+              )}
             </form>
           </BoxWrapper>
         </Box>

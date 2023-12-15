@@ -113,18 +113,18 @@ const App = (props: ExtendedAppProps) => {
   return (
     <CacheProvider value={emotionCache}>
       <Head>
-        <title>{`${themeConfig.templateName} - Credential Request for Urios`}</title>
+        <title>{`${themeConfig.templateName} FSUU`}</title>
         <meta
           name='description'
-          content={`${themeConfig.templateName} – Credential Request for Urios is an in-house system where students/alumni can request for their credential without the need for lining up in the registar office.`}
+          content={`${themeConfig.templateName} FSUU – is an in-house system where students/alumni can request for their credential without the need for lining up in the registar office.`}
         />
         <meta
           name='keywords'
-          content='Father Saturnino Urios University, FSUU, CRURIOS, Credential Request for Urios'
+          content='Father Saturnino Urios University, FSUU, CredentialHub, CredentialHub for Urios'
         />
         <meta name='viewport' content='initial-scale=1, width=device-width' />
-        <meta name='apple-mobile-web-app-title' content='CRURIOS' />
-        <meta name='application-name' content='CRURIOS' />
+        <meta name='apple-mobile-web-app-title' content='CredentialHub' />
+        <meta name='application-name' content='CredentialHub' />
         <meta name='msapplication-TileColor' content='#da532c' />
         <meta name='theme-color' content='#ffffff' />
       </Head>

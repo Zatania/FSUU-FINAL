@@ -20,6 +20,7 @@ import { FormControlLabel, FormGroup, Checkbox } from '@mui/material'
 
 // ** Third Party Imports
 import { useForm, Controller } from 'react-hook-form'
+import toast from 'react-hot-toast'
 
 // ** Icon Imports
 import Icon from 'src/@core/components/icon'
@@ -36,7 +37,7 @@ const Transition = forwardRef(function Transition(
 })
 
 interface TransactionData {
-  id: number
+  user_id: number
   dateFilled: string
   transcriptCopies: number
   transcriptAmount: number
@@ -55,6 +56,8 @@ interface TransactionData {
   certificationAmount: number
   cavRedRibbonCopies: number
   cavRedRibbonAmount: number
+  totalAmoount: number
+  purpose: string
 }
 
 const RequestCredentials = () => {
@@ -109,8 +112,82 @@ const RequestCredentials = () => {
     router.push('/')
   }
 
-  const onSubmit = (data: TransactionData) => {
-    console.log(data)
+  const onSubmit = async (data: TransactionData) => {
+    const dateToday = dayjs().format('YYYY-MM-DD')
+    const user_id = session?.user?.id
+
+    // ** Calculate Amount
+    const transcriptAmount = (data.transcriptCopies || 0) * transcriptPrice
+    const dismissalAmount = (data.dismissalCopies || 0) * dismissalPrice
+    const moralCharacterAmount = (data.moralCharacterCopies || 0) * moralCharacterPrice
+    const diplomaAmount = (data.diplomaCopies || 0) * diplomaPrice
+    const authenticationAmount = (data.authenticationCopies || 0) * authenticationPrice
+    const courseDescriptionAmount = (data.courseDescriptionCopies || 0) * courseDescriptionPrice
+    const certificationAmount = (data.certificationCopies || 0) * certificationPrice
+    const cavRedRibbonAmount = (data.cavRedRibbonCopies || 0) * cavRedRibbonPrice
+
+    // ** Calculate Total Amount
+    const totalAmount =
+      transcriptAmount +
+      dismissalAmount +
+      moralCharacterAmount +
+      diplomaAmount +
+      authenticationAmount +
+      courseDescriptionAmount +
+      certificationAmount +
+      cavRedRibbonAmount
+
+    // ** Insert dateToday, user_id, transcriptAmount, dismissalAmount, moralCharacterAmount, diplomaAmount, authenticationAmount, courseDescriptionAmount, certificationAmount, cavRedRibbonAmount, totalAmount into data
+
+    data = {
+      ...data,
+      user_id,
+      dateFilled: dateToday,
+      transcriptAmount,
+      dismissalAmount,
+      moralCharacterAmount,
+      diplomaAmount,
+      authenticationAmount,
+      courseDescriptionAmount,
+      certificationAmount,
+      cavRedRibbonAmount,
+      totalAmount
+    }
+
+    // Parse number fields to integers
+    const numericFields = [
+      'transcriptCopies',
+      'dismissalCopies',
+      'moralCharacterCopies',
+      'diplomaCopies',
+      'authenticationCopies',
+      'courseDescriptionCopies',
+      'certificationCopies',
+      'cavRedRibbonCopies'
+    ]
+
+    numericFields.forEach(field => {
+      data[field] = parseInt(data[field], 10) || 0
+    })
+
+    try {
+      const response = await fetch('/api/transactions/new', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to submit form')
+      }
+
+      toast.success('Request Submission Successful')
+      router.push('/')
+    } catch (error) {
+      toast.error('Request Submission Failed')
+    }
   }
 
   return (
@@ -455,6 +532,22 @@ const RequestCredentials = () => {
             )}
             <Grid item sm={12} xs={12}>
               <Divider sx={{ mb: '0 !important' }} />
+            </Grid>
+            <Grid item sm={12} xs={12}>
+              <Controller
+                name='purpose'
+                control={control}
+                rules={{ required: 'This field is required' }}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    fullWidth
+                    label='Purpose of Request'
+                    error={!!errors.purpose}
+                    helperText={errors.purpose?.message}
+                  />
+                )}
+              />
             </Grid>
           </Grid>
         </DialogContent>
