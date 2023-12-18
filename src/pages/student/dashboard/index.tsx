@@ -128,17 +128,17 @@ const DashboardStudent = () => {
     setShow(true)
   }
 
-  useEffect(() => {
-    const fetchTransactions = async () => {
-      try {
-        const response = await fetch(`/api/transactions/list`)
-        const transactionList = await response.json()
-        setData(transactionList) // Assuming the API response is an array of transactions
-      } catch (error) {
-        console.error('Error fetching transactions:', error)
-      }
+  const fetchTransactions = async () => {
+    try {
+      const response = await fetch(`/api/transactions/list`)
+      const transactionList = await response.json()
+      setData(transactionList) // Assuming the API response is an array of transactions
+    } catch (error) {
+      console.error('Error fetching transactions:', error)
     }
+  }
 
+  useEffect(() => {
     fetchTransactions()
   }, [])
 
@@ -562,6 +562,9 @@ const DashboardStudent = () => {
       if (response.status === 200) {
         toast.success('Transaction updated successfully')
         handleClose()
+
+        // Fetch updated transactions after submission
+        fetchTransactions()
       }
     } catch (error) {
       console.error('Error updating transaction:', error)

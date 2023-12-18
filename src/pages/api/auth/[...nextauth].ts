@@ -104,6 +104,7 @@ export const authOptions: NextAuthOptions = {
         token.username = userData.username
         token.firstName = userData.firstName
         token.lastName = userData.lastName
+        token.location = userData.homeAddress
         token.studentNumber = userData.studentNumber
       }
 
@@ -117,6 +118,7 @@ export const authOptions: NextAuthOptions = {
         session.user.username = token.username
         session.user.firstName = token.firstName
         session.user.lastName = token.lastName
+        session.user.location = token.location
         session.user.studentNumber = token.studentNumber
       }
 

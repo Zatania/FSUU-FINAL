@@ -87,6 +87,16 @@ const UserDropdown = (props: Props) => {
 
   const { data: session } = useSession()
 
+  const goToProfile = () => {
+    if (session.user.role === 'student') {
+      router.push('/student/profile')
+    } else if (session.user.role === 'staff') {
+      router.push('/staff/profile')
+    } else if (session.user.role === 'admin') {
+      router.push('/admin/profile')
+    }
+  }
+
   return (
     <Fragment>
       <Badge
@@ -157,7 +167,7 @@ const UserDropdown = (props: Props) => {
           </Box>
         </Box>
         <Divider sx={{ mt: '0 !important' }} />
-        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose()}>
+        <MenuItem sx={{ p: 0 }} onClick={() => goToProfile()}>
           <Box sx={styles}>
             <Icon icon='mdi:account-outline' />
             Profile

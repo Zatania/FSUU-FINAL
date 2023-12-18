@@ -6,22 +6,14 @@ interface TransactionData {
   user_id: number
   dateFilled: string
   transcriptCopies: number
-  transcriptAmount: number
   dismissalCopies: number
-  dismissalAmount: number
   moralCharacterCopies: number
-  moralCharacterAmount: number
   diplomaCopies: number
-  diplomaAmount: number
   authenticationCopies: number
-  authenticationAmount: number
   courseDescriptionCopies: number
-  courseDescriptionAmount: number
   certificationType: string
   certificationCopies: number
-  certificationAmount: number
   cavRedRibbonCopies: number
-  cavRedRibbonAmount: number
   totalAmount: number
   purpose: string
 }
@@ -31,49 +23,33 @@ const insertTransaction = async (transaction: TransactionData) => {
     user_id,
     dateFilled,
     transcriptCopies,
-    transcriptAmount,
     dismissalCopies,
-    dismissalAmount,
     moralCharacterCopies,
-    moralCharacterAmount,
     diplomaCopies,
-    diplomaAmount,
     authenticationCopies,
-    authenticationAmount,
     courseDescriptionCopies,
-    courseDescriptionAmount,
     certificationType,
     certificationCopies,
-    certificationAmount,
     cavRedRibbonCopies,
-    cavRedRibbonAmount,
     totalAmount,
     purpose
   } = transaction
 
   try {
     const [rows] = (await db.query(
-      'INSERT INTO transactions (user_id, dateFilled, transcriptCopies, transcriptAmount, dismissalCopies, dismissalAmount, moralCharacterCopies, moralCharacterAmount, diplomaCopies, diplomaAmount, authenticationCopies, authenticationAmount, courseDescriptionCopies, courseDescriptionAmount, certificationType, certificationCopies, certificationAmount, cavRedRibbonCopies, cavRedRibbonAmount, totalAmount, status, purpose) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      'INSERT INTO transactions (user_id, dateFilled, transcriptCopies, dismissalCopies, moralCharacterCopies, diplomaCopies, authenticationCopies, courseDescriptionCopies, certificationType, certificationCopies, cavRedRibbonCopies, totalAmount, status, purpose) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
       [
         user_id,
         dateFilled,
         transcriptCopies,
-        transcriptAmount,
         dismissalCopies,
-        dismissalAmount,
         moralCharacterCopies,
-        moralCharacterAmount,
         diplomaCopies,
-        diplomaAmount,
         authenticationCopies,
-        authenticationAmount,
         courseDescriptionCopies,
-        courseDescriptionAmount,
         certificationType,
         certificationCopies,
-        certificationAmount,
         cavRedRibbonCopies,
-        cavRedRibbonAmount,
         totalAmount,
         'Submitted',
         purpose
@@ -86,11 +62,35 @@ const insertTransaction = async (transaction: TransactionData) => {
   }
 }
 
+const insertUserLog = async (user_id: number, activity: string, date: string) => {
+  try {
+    const [userRows] = (await db.query('SELECT firstName, lastName FROM users WHERE id = ?', [
+      user_id
+    ])) as RowDataPacket[]
+    const user = userRows[0]
+
+    // Create the full name
+    const fullName = user ? `${user.firstName} ${user.lastName}` : ''
+
+    // Insert into user_logs with the updated activity log
+    await db.query('INSERT INTO user_logs (user_id, activity, date) VALUES (?, ?, ?)', [
+      user_id,
+      `${fullName} ${activity}`,
+      date
+    ])
+  } catch (error) {
+    console.error('Error inserting user log:', error)
+  }
+}
+
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const data = req.body
 
   try {
     const transaction = await insertTransaction(data)
+
+    // Insert into user_logs after successfully inserting the transaction
+    await insertUserLog(data.user_id, 'has created a new transaction.', data.dateFilled)
 
     return res.status(200).json(transaction)
   } catch (error) {
