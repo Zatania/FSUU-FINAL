@@ -105,7 +105,7 @@ export const authOptions: NextAuthOptions = {
         token.firstName = userData.firstName
         token.lastName = userData.lastName
         token.location = userData.homeAddress
-        token.studentNumber = userData.studentNumber
+        token.studentNumber = userData.studentNumber || userData.employeeNumber
       }
 
       return token

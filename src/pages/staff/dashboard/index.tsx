@@ -184,13 +184,14 @@ const DashboardStaff = () => {
     setShow(true)
   }
 
-  const fetchTransactions = async () => {
+  const fetchTransactions = async staffID => {
     try {
-      const response = await fetch(`/api/transactions/list`, {
-        method: 'GET',
+      const response = await fetch(`/api/transactions/staff-list`, {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json'
-        }
+        },
+        body: JSON.stringify({ staff_id: staffID })
       })
       const transactionList = await response.json()
       setData(transactionList) // Assuming the API response is an array of transactions
@@ -200,8 +201,8 @@ const DashboardStaff = () => {
   }
 
   useEffect(() => {
-    fetchTransactions()
-  }, [])
+    fetchTransactions(staffID)
+  }, [staffID])
 
   const handleSearch = (searchValue: string) => {
     setSearchText(searchValue)

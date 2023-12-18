@@ -88,11 +88,11 @@ const UserDropdown = (props: Props) => {
   const { data: session } = useSession()
 
   const goToProfile = () => {
-    if (session.user.role === 'student') {
+    if (session?.user.role === 'student') {
       router.push('/student/profile')
-    } else if (session.user.role === 'staff') {
+    } else if (session?.user.role === 'staff') {
       router.push('/staff/profile')
-    } else if (session.user.role === 'admin') {
+    } else if (session?.user.role === 'admin') {
       router.push('/admin/profile')
     }
   }
@@ -110,7 +110,7 @@ const UserDropdown = (props: Props) => {
         }}
       >
         <Avatar
-          alt={session.user.firstName + ' ' + session.user.lastName}
+          alt={session?.user.firstName + ' ' + session?.user.lastName}
           onClick={handleDropdownOpen}
           sx={{ width: 40, height: 40 }}
           src='/images/avatars/1.png'
@@ -135,32 +135,28 @@ const UserDropdown = (props: Props) => {
               }}
             >
               <Avatar
-                alt={session.user.firstName + ' ' + session.user.lastName}
+                alt={session?.user.firstName + ' ' + session?.user.lastName}
                 src='/images/avatars/1.png'
                 sx={{ width: '2.5rem', height: '2.5rem' }}
               />
             </Badge>
-            {session.user.role === 'student' && (
+            {session?.user.role === 'student' && (
               <Box sx={{ display: 'flex', ml: 3, alignItems: 'flex-start', flexDirection: 'column' }}>
-                <Typography sx={{ fontWeight: 600 }}>{session.user.firstName + ' ' + session.user.lastName}</Typography>
+                <Typography sx={{ fontWeight: 600 }}>
+                  {session?.user.firstName + ' ' + session?.user.lastName}
+                </Typography>
                 <Typography variant='body2' sx={{ fontSize: '0.8rem', color: 'text.disabled' }}>
-                  Student Number: {session.user.studentNumber}
+                  Student Number: {session?.user.studentNumber}
                 </Typography>
               </Box>
             )}
-            {session.user.role === 'staff' && (
+            {session?.user.role === 'staff' && (
               <Box sx={{ display: 'flex', ml: 3, alignItems: 'flex-start', flexDirection: 'column' }}>
-                <Typography sx={{ fontWeight: 600 }}>{session.user.firstName + ' ' + session.user.lastName}</Typography>
-                <Typography variant='body2' sx={{ fontSize: '0.8rem', color: 'text.disabled' }}>
-                  Employee Number: {session.user.studentNumber}
+                <Typography sx={{ fontWeight: 600 }}>
+                  {session?.user.firstName + ' ' + session?.user.lastName}
                 </Typography>
-              </Box>
-            )}
-            {session.user.role === 'admin' && (
-              <Box sx={{ display: 'flex', ml: 3, alignItems: 'flex-start', flexDirection: 'column' }}>
-                <Typography sx={{ fontWeight: 600 }}>{session.user.firstName + ' ' + session.user.lastName}</Typography>
                 <Typography variant='body2' sx={{ fontSize: '0.8rem', color: 'text.disabled' }}>
-                  Admin Number: {session.user.studentNumber}
+                  Employee Number: {session?.user.studentNumber}
                 </Typography>
               </Box>
             )}
