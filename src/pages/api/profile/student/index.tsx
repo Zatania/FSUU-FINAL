@@ -2,48 +2,6 @@ import { NextApiRequest, NextApiResponse } from 'next/types'
 import db from '../../../db'
 import { RowDataPacket } from 'mysql2'
 
-interface Student {
-  id: number
-  username: string
-  password: string
-  studentNumber: string
-  firstName: string
-  middleName: string
-  lastName: string
-  department: string
-  course: string
-  major: string
-  graduateCheck: string
-  graduationDate: string
-  academicHonor: string
-  yearLevel: string
-  schoolYear: string
-  semester: string
-  homeAddress: string
-  contactNumber: string
-  emailAddress: string
-  birthDate: string
-  birthPlace: string
-  religion: string
-  citizenship: string
-  sex: string
-  fatherName: string
-  motherName: string
-  guardianName: string
-  elementary: string
-  elementaryGraduated: string
-  secondary: string
-  secondaryGraduated: string
-  juniorHigh: string
-  juniorHighGraduated: string
-  seniorHigh: string
-  seniorHighGraduated: string
-  tertiary: string
-  tertiaryGraduated: string
-  employedAt: string
-  position: string
-}
-
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const id = req.body
   try {

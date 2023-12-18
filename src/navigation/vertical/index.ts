@@ -5,7 +5,7 @@ const navigation = (): VerticalNavItemsType => {
   return [
     {
       title: 'Dashboard',
-      path: '/dashboard/admin',
+      path: '/admin/dashboard',
       action: 'read',
       subject: 'admin-page',
       icon: 'mdi:home-outline'
@@ -19,7 +19,7 @@ const navigation = (): VerticalNavItemsType => {
     },
     {
       title: 'Dashboard',
-      path: '/dashboard/staff',
+      path: '/staff/dashboard',
       action: 'read',
       subject: 'staff-page',
       icon: 'mdi:home-outline'

@@ -85,32 +85,6 @@ const PerfectScrollbar = styled(PerfectScrollbarComponent)({
   maxHeight: 349
 })
 
-// ** Styled Avatar component
-const Avatar = styled(CustomAvatar)<CustomAvatarProps>({
-  width: 38,
-  height: 38,
-  fontSize: '1.125rem'
-})
-
-// ** Styled component for the title in MenuItems
-const MenuItemTitle = styled(Typography)<TypographyProps>(({ theme }) => ({
-  fontWeight: 600,
-  flex: '1 1 100%',
-  overflow: 'hidden',
-  fontSize: '0.875rem',
-  whiteSpace: 'nowrap',
-  textOverflow: 'ellipsis',
-  marginBottom: theme.spacing(0.75)
-}))
-
-// ** Styled component for the subtitle in MenuItems
-const MenuItemSubtitle = styled(Typography)<TypographyProps>({
-  flex: '1 1 100%',
-  overflow: 'hidden',
-  whiteSpace: 'nowrap',
-  textOverflow: 'ellipsis'
-})
-
 const ScrollWrapper = ({ children, hidden }: { children: ReactNode; hidden: boolean }) => {
   if (hidden) {
     return <Box sx={{ maxHeight: 349, overflowY: 'auto', overflowX: 'hidden' }}>{children}</Box>
@@ -138,26 +112,6 @@ const NotificationDropdown = (props: Props) => {
 
   const handleDropdownClose = () => {
     setAnchorEl(null)
-  }
-
-  const RenderAvatar = ({ notification }: { notification: NotificationsType }) => {
-    const { avatarAlt, avatarImg, avatarIcon, avatarText, avatarColor } = notification
-
-    if (avatarImg) {
-      return <Avatar alt={avatarAlt} src={avatarImg} />
-    } else if (avatarIcon) {
-      return (
-        <Avatar skin='light' color={avatarColor}>
-          {avatarIcon}
-        </Avatar>
-      )
-    } else {
-      return (
-        <Avatar skin='light' color={avatarColor}>
-          {getInitials(avatarText as string)}
-        </Avatar>
-      )
-    }
   }
 
   return (
@@ -197,22 +151,7 @@ const NotificationDropdown = (props: Props) => {
             />
           </Box>
         </MenuItem>
-        <ScrollWrapper hidden={hidden}>
-          {notifications.map((notification: NotificationsType, index: number) => (
-            <MenuItem key={index} onClick={handleDropdownClose}>
-              <Box sx={{ width: '100%', display: 'flex', alignItems: 'center' }}>
-                <RenderAvatar notification={notification} />
-                <Box sx={{ mx: 4, flex: '1 1', display: 'flex', overflow: 'hidden', flexDirection: 'column' }}>
-                  <MenuItemTitle>{notification.title}</MenuItemTitle>
-                  <MenuItemSubtitle variant='body2'>{notification.subtitle}</MenuItemSubtitle>
-                </Box>
-                <Typography variant='caption' sx={{ color: 'text.disabled' }}>
-                  {notification.meta}
-                </Typography>
-              </Box>
-            </MenuItem>
-          ))}
-        </ScrollWrapper>
+        <ScrollWrapper hidden={hidden}>Ongoing Construction</ScrollWrapper>
         <MenuItem
           disableRipple
           disableTouchRipple
