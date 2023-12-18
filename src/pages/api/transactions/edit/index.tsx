@@ -27,24 +27,9 @@ interface UpdateData {
   status: string
 }
 
-// ** Transaction Price
-const prices = {
-  transcript: 500,
-  dismissal: 500,
-  moralCharacter: 100,
-  diploma: 500,
-  authentication: 50,
-  courseDescription: 500,
-  certification: 100,
-  cavRedRibbon: 300
-}
-
 const updateDataById = async (id: number, updatedFields: UpdateData) => {
   const keys = Object.keys(updatedFields)
   const values = keys.map(key => updatedFields[key])
-
-  console.log(keys)
-  console.log(values)
 
   // Include individual amounts and total amount in the update
   const setArray = [...keys].map(key => `${key} = ?`)
