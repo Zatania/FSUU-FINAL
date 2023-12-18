@@ -14,7 +14,7 @@ interface User {
   course: string
   major: string
   graduateCheck: string
-  graduationDate: string
+  graduationDate: string | null
   academicHonor: string
   yearLevel: string
   schoolYear: string
@@ -22,7 +22,7 @@ interface User {
   homeAddress: string
   contactNumber: string
   emailAddress: string
-  birthDate: string
+  birthDate: string | null
   birthPlace: string
   religion: string
   citizenship: string
@@ -31,18 +31,18 @@ interface User {
   motherName: string
   guardianName: string
   elementary: string
-  elementaryGraduated: string
+  elementaryGraduated: string | null
   secondary: string
-  secondaryGraduated: string
+  secondaryGraduated: string | null
   juniorHigh: string
-  juniorHighGraduated: string
+  juniorHighGraduated: string | null
   seniorHigh: string
-  seniorHighGraduated: string
+  seniorHighGraduated: string | null
   tertiary: string
-  tertiaryGraduated: string
+  tertiaryGraduated: string | null
   employedAt: string
   position: string
-  [key: string]: string | number
+  [key: string]: string | number | null
 }
 
 interface NextApiRequestWithUser extends NextApiRequest {
@@ -66,6 +66,8 @@ const formatDateValues = (userData: User) => {
   dateFields.forEach(field => {
     if (formattedUserData[field]) {
       formattedUserData[field] = dayjs(formattedUserData[field]).format('YYYY-MM-DD')
+    } else {
+      formattedUserData[field] = null // Set to NULL if the field is an empty string
     }
   })
 

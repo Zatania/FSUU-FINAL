@@ -128,9 +128,15 @@ const DashboardStudent = () => {
     setShow(true)
   }
 
-  const fetchTransactions = async () => {
+  const fetchTransactions = async (userId: number | null) => {
     try {
-      const response = await fetch(`/api/transactions/list`)
+      const response = await fetch(`/api/transactions/list`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ user_id: userId })
+      })
       const transactionList = await response.json()
       setData(transactionList) // Assuming the API response is an array of transactions
     } catch (error) {
@@ -139,8 +145,8 @@ const DashboardStudent = () => {
   }
 
   useEffect(() => {
-    fetchTransactions()
-  }, [])
+    fetchTransactions(userId)
+  }, [userId])
 
   const handleSearch = (searchValue: string) => {
     setSearchText(searchValue)
@@ -163,7 +169,7 @@ const DashboardStudent = () => {
 
     Object.keys(editedData).forEach(field => {
       if (field.endsWith('Copies')) {
-        const copyType = field.replace('Copies', '').toLowerCase()
+        const copyType = field.replace('Copies', '')
         totalAmount += editedData[field] * prices[copyType]
       }
     })
@@ -544,7 +550,6 @@ const DashboardStudent = () => {
 
     // Calculate total amount based on edited fields
     data.totalAmount = calculateTotalAmount(data)
-
     try {
       // Include the selected transaction ID in the form data
       if (selectedTransaction) {
@@ -564,7 +569,7 @@ const DashboardStudent = () => {
         handleClose()
 
         // Fetch updated transactions after submission
-        fetchTransactions()
+        fetchTransactions(userId)
       }
     } catch (error) {
       console.error('Error updating transaction:', error)
@@ -577,7 +582,7 @@ const DashboardStudent = () => {
       <DataGrid
         autoHeight
         columns={columns}
-        pageSizeOptions={[7, 10, 25, 50]}
+        pageSizeOptions={[10, 25, 50, 100]}
         paginationModel={paginationModel}
         slots={{ toolbar: QuickSearchToolbar }}
         onPaginationModelChange={setPaginationModel}

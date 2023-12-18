@@ -43,6 +43,7 @@ import * as bcrypt from 'bcryptjs'
 import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import toast from 'react-hot-toast'
+import dayjs from 'dayjs'
 
 //** For Date/Time Picker
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
@@ -108,7 +109,6 @@ const schema = yup.object().shape({
   lastName: yup.string().required('Last Name is required.'),
   department: yup.string().required('Department is required.'),
   course: yup.string().required('Course is required.'),
-  academicHonor: yup.string().required('Academic Honor is required.'),
   homeAddress: yup.string().required('Home Address is required.'),
   contactNumber: yup.string().required('Contact Number is required.'),
   emailAddress: yup.string().email('Email must be a valid email.').required('Email is required.'),
@@ -398,7 +398,7 @@ const Register = () => {
                             onChange={onChange}
                             id='auth-login-v2-confirmPassword'
                             error={Boolean(errors.confirmPassword)}
-                            type={showPassword ? 'text' : 'password'}
+                            type={showConfirmPassword ? 'text' : 'password'}
                             endAdornment={
                               <InputAdornment position='end'>
                                 <IconButton

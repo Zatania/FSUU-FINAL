@@ -265,7 +265,7 @@ const LoginPage = () => {
                 <Controller
                   name='userType'
                   control={control}
-                  defaultValue='Student'
+                  defaultValue=''
                   render={({ field: { value, onChange, onBlur } }) => (
                     <Select
                       value={value}

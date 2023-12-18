@@ -30,7 +30,16 @@ interface Transaction {
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const results = (await db.query('SELECT * from transactions')) as RowDataPacket
+    const { user_id } = req.body
+    let query = 'SELECT * from transactions'
+    let queryParams: any[] = []
+
+    if (user_id) {
+      query += ' WHERE user_id = ?'
+      queryParams = [user_id]
+    }
+
+    const results = (await db.query(query, queryParams)) as RowDataPacket
 
     const rows = results[0].map((row: Transaction) => ({
       id: row.id,

@@ -6,22 +6,14 @@ interface UpdateData {
   user_id: number
   dateFilled: string
   transcriptCopies: number
-  transcriptAmount: number
   dismissalCopies: number
-  dismissalAmount: number
   moralCharacterCopies: number
-  moralCharacterAmount: number
   diplomaCopies: number
-  diplomaAmount: number
   authenticationCopies: number
-  authenticationAmount: number
   courseDescriptionCopies: number
-  courseDescriptionAmount: number
   certificationType: string
   certificationCopies: number
-  certificationAmount: number
   cavRedRibbonCopies: number
-  cavRedRibbonAmount: number
   totalAmount: number
   purpose: string
   status: string
