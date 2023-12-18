@@ -43,7 +43,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     const rows = results[0].map((row: Transaction) => ({
       id: row.id,
-      user_id: row.id,
+      user_id: row.user_id,
       dateFilled: row.dateFilled,
       transcriptCopies: row.transcriptCopies,
       transcriptAmount: row.transcriptAmount,

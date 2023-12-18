@@ -305,6 +305,18 @@ const DashboardStudent = () => {
                               )}
                             />
                           </Grid>
+                          {['Scheduled', 'Claimed'].includes(selectedTransaction?.status) ? (
+                            <Grid item xs={12}>
+                              <TextField
+                                value={dayjs(selectedTransaction?.transcriptSchedule).format('MM/DD/YYYY')}
+                                fullWidth
+                                label='Schedule'
+                                InputProps={{
+                                  readOnly: true
+                                }}
+                              />
+                            </Grid>
+                          ) : null}
                         </>
                       ) : null}
                       {selectedTransaction?.dismissalCopies !== 0 ? (
@@ -330,6 +342,18 @@ const DashboardStudent = () => {
                               )}
                             />
                           </Grid>
+                          {['Scheduled', 'Claimed'].includes(selectedTransaction?.status) ? (
+                            <Grid item xs={12}>
+                              <TextField
+                                value={dayjs(selectedTransaction?.dismissalSchedule).format('MM/DD/YYYY')}
+                                fullWidth
+                                label='Schedule'
+                                InputProps={{
+                                  readOnly: true
+                                }}
+                              />
+                            </Grid>
+                          ) : null}
                         </>
                       ) : null}
                       {selectedTransaction?.moralCharacterCopies !== 0 ? (
@@ -355,6 +379,18 @@ const DashboardStudent = () => {
                               )}
                             />
                           </Grid>
+                          {['Scheduled', 'Claimed'].includes(selectedTransaction?.status) ? (
+                            <Grid item xs={12}>
+                              <TextField
+                                value={dayjs(selectedTransaction?.moralCharacterSchedule).format('MM/DD/YYYY')}
+                                fullWidth
+                                label='Schedule'
+                                InputProps={{
+                                  readOnly: true
+                                }}
+                              />
+                            </Grid>
+                          ) : null}
                         </>
                       ) : null}
                       {selectedTransaction?.diplomaCopies !== 0 ? (
@@ -380,6 +416,18 @@ const DashboardStudent = () => {
                               )}
                             />
                           </Grid>
+                          {['Scheduled', 'Claimed'].includes(selectedTransaction?.status) ? (
+                            <Grid item xs={12}>
+                              <TextField
+                                value={dayjs(selectedTransaction?.diplomaSchedule).format('MM/DD/YYYY')}
+                                fullWidth
+                                label='Schedule'
+                                InputProps={{
+                                  readOnly: true
+                                }}
+                              />
+                            </Grid>
+                          ) : null}
                         </>
                       ) : null}
                       {selectedTransaction?.authenticationCopies !== 0 ? (
@@ -405,6 +453,18 @@ const DashboardStudent = () => {
                               )}
                             />
                           </Grid>
+                          {['Scheduled', 'Claimed'].includes(selectedTransaction?.status) ? (
+                            <Grid item xs={12}>
+                              <TextField
+                                value={dayjs(selectedTransaction?.authenticationSchedule).format('MM/DD/YYYY')}
+                                fullWidth
+                                label='Schedule'
+                                InputProps={{
+                                  readOnly: true
+                                }}
+                              />
+                            </Grid>
+                          ) : null}
                         </>
                       ) : null}
                       {selectedTransaction?.courseDescriptionCopies !== 0 ? (
@@ -430,6 +490,18 @@ const DashboardStudent = () => {
                               )}
                             />
                           </Grid>
+                          {['Scheduled', 'Claimed'].includes(selectedTransaction?.status) ? (
+                            <Grid item xs={12}>
+                              <TextField
+                                value={dayjs(selectedTransaction?.courseDescriptionSchedule).format('MM/DD/YYYY')}
+                                fullWidth
+                                label='Schedule'
+                                InputProps={{
+                                  readOnly: true
+                                }}
+                              />
+                            </Grid>
+                          ) : null}
                         </>
                       ) : null}
                       {selectedTransaction?.certificationCopies !== 0 ? (
@@ -471,6 +543,18 @@ const DashboardStudent = () => {
                               )}
                             />
                           </Grid>
+                          {['Scheduled', 'Claimed'].includes(selectedTransaction?.status) ? (
+                            <Grid item xs={12}>
+                              <TextField
+                                value={dayjs(selectedTransaction?.certificationSchedule).format('MM/DD/YYYY')}
+                                fullWidth
+                                label='Schedule'
+                                InputProps={{
+                                  readOnly: true
+                                }}
+                              />
+                            </Grid>
+                          ) : null}
                         </>
                       ) : null}
                       {selectedTransaction?.cavRedRibbonCopies !== 0 ? (
@@ -496,6 +580,18 @@ const DashboardStudent = () => {
                               )}
                             />
                           </Grid>
+                          {['Scheduled', 'Claimed'].includes(selectedTransaction?.status) ? (
+                            <Grid item xs={12}>
+                              <TextField
+                                value={dayjs(selectedTransaction?.cavRedRibbonSchedule).format('MM/DD/YYYY')}
+                                fullWidth
+                                label='Schedule'
+                                InputProps={{
+                                  readOnly: true
+                                }}
+                              />
+                            </Grid>
+                          ) : null}
                         </>
                       ) : null}
                       <Grid item sm={12} xs={12}>
@@ -529,12 +625,15 @@ const DashboardStudent = () => {
                     pb: theme => [`${theme.spacing(8)} !important`, `${theme.spacing(12.5)} !important`]
                   }}
                 >
-                  <Button variant='contained' sx={{ mr: 1 }} type='submit'>
-                    Submit
-                  </Button>
-                  <Button variant='outlined' color='secondary' onClick={handleClose}>
-                    Cancel
-                  </Button>
+                  {['Scheduled', 'Claimed'].includes(selectedTransaction?.status) ? (
+                    <Button variant='outlined' color='secondary' onClick={handleClose}>
+                      Cancel
+                    </Button>
+                  ) : (
+                    <Button variant='outlined' color='secondary' onClick={handleClose}>
+                      Submit
+                    </Button>
+                  )}
                 </DialogActions>
               </form>
             </Dialog>
