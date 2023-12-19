@@ -29,6 +29,13 @@ const navigation = (): HorizontalNavItemsType => [
     action: 'read',
     subject: 'request-page',
     icon: 'mdi:shield-outline'
+  },
+  {
+    path: '/admin/staff/add',
+    title: 'Add Staff',
+    action: 'read',
+    subject: 'add-staff-page',
+    icon: 'mdi:shield-outline'
   }
 ]
 
