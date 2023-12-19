@@ -17,7 +17,6 @@ const insertStaff = async (data: StaffData, departments: number[]) => {
   const { id, username, password, employeeNumber, firstName, middleName, lastName, address } = data
 
   try {
-    console.log('Inserting into staffs table')
     const [rows] = (await db.query(
       `
         INSERT INTO staffs (id, username, password, employeeNumber, firstName, middleName, lastName, address)
@@ -28,10 +27,8 @@ const insertStaff = async (data: StaffData, departments: number[]) => {
 
     const staffID = rows.insertId
 
-    console.log('Inserting into staffs roles table')
     await db.query('INSERT INTO staffs_roles (staff_id, role_id) VALUES (?, ?)', [staffID, 2])
 
-    console.log('Inserting into staffs departments table')
     const departmentValues = departments.map(department => [staffID, department])
     await db.query('INSERT INTO staffs_departments (staff_id, department_id) VALUES ?', [departmentValues])
 

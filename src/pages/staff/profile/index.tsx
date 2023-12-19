@@ -66,7 +66,6 @@ const StaffProfile = () => {
       })
       const data = await res.json()
       setStaff(data)
-      console.log(data)
     }
 
     fetchStaff()
